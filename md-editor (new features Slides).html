@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Text Modifier</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <style>
+        textarea {
+            width: 40vw;
+            /* 50% of the viewport width */
+            height: 40vh;
+            /* 50% of the viewport height */
+            float: left;
+            /* Make textareas align side by side */
+        }
+
+        .controls {
+            float: left;
+            width: 50vw;
+            height: 50vh;
+        }
+
+        button,
+        input[type="radio"],
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+
+        #alertBox {
+            display: none;
+            margin-top: 10px;
+            color: green;
+        }
+        label{
+            font-size: smaller;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="row mt-4">
+        <div class="col">
+            <textarea id="inputText" placeholder="Paste your text here" class="form-control" rows="3"></textarea>
+        </div>
+        <div class="col">
+            <textarea id="outputText" placeholder="Modified text will appear here" class="form-control"></textarea>
+        </div>
+
+    </div>
+
+    <div class="mt-2 container row">
+        <div class="col-1">
+            <a href="/md-editor.html" class="btn btn-success">editor</a>
+        </div>
+
+        <div class="col-1">
+            <a href="/test.html" class="btn btn-success" target="_blank">Render</a>
+        </div>
+        <div class="col-1">
+            <a href="/mathjax-editor.html" class="btn btn-primary" target="_blank">MathJax</a>
+        </div>
+    </div>
+    
+    <div class="container">
+
+        <div class="row">
+
+            <div class="col">
+                <input type="radio" id="appendD" name="modificationType" value="appendD" checked>
+                <label for="appendD">insert ~~ after'(D)'</label>
+            </div>
+
+            <div class="col">
+                <input type="radio" id="appendAns" name="modificationType" value="appendAns">
+                <label for="appendAns">Insert '~~' after 'Ans.'</label>
+            </div>
+
+            <div class="col">
+                <input type="radio" id="insertBeforeEx" name="modificationType" value="insertBeforeEx">
+                <label for="insertBeforeEx">Insert '~~' before Ex. </label>
+            </div> 
+        
+            <div class="col">
+
+                <input type="radio" id="insertBeforeEx2" name="modificationType" value="insertBeforeEx2">
+                <label for="insertBeforeEx2">Insert '~~' before "Ex " </label>  
+            </div>    
+        
+
+            <div class="col">
+
+                <input type="radio" id="insertBeforeNumberedLine" name="modificationType" value="insertBeforeNumberedLine">
+                <label for="insertBeforeNumberedLine">Insert ~~ before num. </label>
+                
+            </div>
+
+            <div class="col">
+
+                <input type="radio" id="levelIslide" name="modificationType" value="levelIslide">
+                <label for="levelIslide">Level-I Slide</label>
+                
+            </div>
+
+            <div class="col">
+
+                <input type="radio" id="levelIIslide" name="modificationType" value="levelIIslide">
+                <label for="levelIIslide">Level-II Slide</label>
+                
+            </div>
+
+            <div class="col">
+
+                <input type="radio" id="addNewLineQuestion" name="modificationType" value="addNewLineQuestion">
+                <label for="addNewLineQuestion">Add New Line in Question</label>
+                
+            </div>
+
+            <div class="col">
+                <input type="radio" id="addmarkdownsection" name="modificationType" value="addmarkdownsection">
+                <label for="addmarkdownsection">Add markdown section</label>
+        
+            </div>
+
+            <div class="col">
+                <input type="radio" id="replacenegwithequal" name="modificationType" value="replacenegwithequal">
+                <label for="replacenegwithequal">Replace ~~ with ======</label>
+        
+            </div>
+
+            <div class="col">
+                <input type="radio" id="newlineafteroptions" name="modificationType" value="newlineafteroptions">
+                <label for="newlineafteroptions">new line after options</label>
+
+            </div>
+
+            <div class="col">
+
+                <input type="radio" id="adddollars" name="modificationType" value="adddollars">
+                <label for="adddollars">add dollars</label>
+            </div>
+
+            <div class="col">
+
+                <input type="radio" id="leftAlignContent" name="modificationType" value="leftAlignContent">
+                <label for="leftAlignContent">Left Align Content - Slide</label>
+            </div>
+
+            <div class="col">
+                <input type="radio" id="addnegbeforesection" name="modificationType" value="addnegbeforesection">
+                <label for="addnegbeforesection">add ~~ before sections</label>
+        
+            </div>
+
+            <div class="col">
+                <input type="radio" id="addnegbeforesection" name="modificationType" value="addnegbeforesection">
+                <label for="addnegbeforesection">add ~~ before sections</label>
+        
+            </div>
+
+            <div class="col">
+
+                <input type="radio" id="replacesections2" name="modificationType" value="replacesections2">
+                <label for="replacesections2">replace sections with }</label>
+            </div>
+
+            <div class="col">
+
+
+                <input type="radio" id="removedoubleseprator" name="modificationType" value="removedoubleseprator">
+                <label for="removedoubleseprator">remove double ======</label>
+        
+            </div>
+
+            <div class="col">
+
+
+                <input type="radio" id="titleHighlightSlides" name="modificationType" value="titleHighlightSlides">
+                <label for="titleHighlightSlides">Title Highlight - slide</label>
+        
+            </div>
+
+            <div class="col">
+
+
+                <input type="radio" id="alphabeticalPointBold" name="modificationType" value="alphabeticalPointBold">
+                <label for="alphabeticalPointBold">Alphabetical Point Bold</label>
+        
+            </div>
+
+            <div class="col">
+
+                <input type="radio" id="addbeforedirections" name="modificationType" value="addbeforedirections">
+                <label for="addbeforedirections">~~ before directions </label>
+
+            </div>
+
+           
+
+            <div class="col">
+
+                <input type="radio" id="correctnewline" name="modificationType" value="correctnewline">
+                <label for="correctnewline">correct \\</label>
+
+            </div>
+
+            <div class="col">
+
+                <input type="radio" id="romanNumberStepBold" name="modificationType" value="romanNumberStepBold">
+                <label for="romanNumberStepBold">Roman Number Step Bold</label>
+
+            </div>
+
+            <div class="col">
+
+                <input type="radio" id="exBold" name="modificationType" value="exBold">
+                <label for="exBold">Ex. Bold</label>
+
+            </div>
+
+
+            
+            <div class="col">
+
+                <input type="radio" id="correcttable" name="modificationType" value="correcttable">
+                <label for="correcttable">correct table</label>
+
+            </div>
+            <div class="col">
+
+                <input type="radio" id="correctbeginaligned" name="modificationType" value="correctbeginaligned">
+                <label for="correctbeginaligned">correct begin aligned </label>
+
+            </div>
+
+            <div class="col">
+
+                <input type="radio" id="removePageNumber" name="modificationType" value="removePageNumber">
+                <label for="removePageNumber">Remove Page Number</label>
+
+            </div>
+
+            <div class="col">
+
+                <input type="radio" id="solBold" name="modificationType" value="solBold">
+                <label for="solBold">sol. Bold</label>
+
+            </div>
+
+            <div class="col">
+
+                <input type="radio" id="hashToPrimary" name="modificationType" value="hashToPrimary">
+                <label for="hashToPrimary">Hash To Primary - slide</label>
+
+            </div>
+
+            <div class="col">
+
+                <input type="radio" id="boldBeforeSemiColon" name="modificationType" value="boldBeforeSemiColon">
+                <label for="boldBeforeSemiColon">Bold Before : </label>
+
+            </div>
+
+            <div class="col">
+
+                <input type="radio" id="solAddBeforeNumSlide" name="modificationType" value="solAddBeforeNumSlide">
+                <label for="solAddBeforeNumSlide">Sol. Add Before Number - slide</label>
+
+            </div>
+
+            <div class="col">
+
+                <input type="radio" id="optionsFragment" name="modificationType" value="optionsFragment">
+                <label for="optionsFragment">Options Fragment - slide</label>
+
+            </div>
+
+            <div class="col">
+
+                <input type="radio" id="questionNegationBold" name="modificationType" value="questionNegationBold">
+                <label for="questionNegationBold">Negation Bold Question</label>
+
+            </div>
+
+            <div class="col">
+
+                <input type="radio" id="removeSpacesOptions" name="modificationType" value="removeSpacesOptions">
+                <label for="removeSpacesOptions">Remove Spaces Options - slide</label>
+
+            </div>
+
+            <div class="col">
+
+                <input type="radio" id="questionNegationBoldFullStop" name="modificationType" value="questionNegationBoldFullStop">
+                <label for="questionNegationBoldFullStop">Negation Bold Question (FullStop)</label>
+
+            </div>
+
+            <div class="col">
+
+                <input type="radio" id="correctbeginbmatrix" name="modificationType" value="correctbeginbmatrix">
+                <label for="correctbeginbmatrix">correct begin bmatrix </label>
+
+            </div>
+
+        
+
+            <!-- <div class="col">
+
+                <input type="radio" id="correctoptions" name="modificationType" value="correctoptions">
+                <label for="correctoptions">correct options</label>
+
+            </div> -->
+
+            <div class="col">
+
+                <input type="radio" id="createnewline" name="modificationType" value="createnewline">
+                <label for="createnewline">add newline</label>
+
+            </div>
+
+
+        </div>
+        </div>
+
+        <div class="container">
+
+            <div class="row">
+                
+                <div class="col">
+
+                    <input type="radio" id="anotherOption" name="modificationType" value="anotherOption">
+                    <label for="anotherOption">Another Replacement Option</label>
+                </div>
+            </div>
+        </div>
+       
+    </div>
+
+    <div class="container mb-5">
+        <button class="btn btn-primary" onclick="modifyText()">Modify Text</button>
+        <button class="btn btn-primary" onclick="clearTextAreas()">Clear Boxes</button>
+        <button class="btn btn-primary" onclick="copyToClipboard()">Copy Output</button>
+        <div id="alertBox">Copying...</div>
+    </div>
+
+    <script>
+
+
+        function modifyText() {
+            var outputText = document.getElementById('outputText').value || document.getElementById('inputText').value;
+            var modificationType = document.querySelector('input[name="modificationType"]:checked').value;
+            var modifiedText = "";
+
+            switch (modificationType) {
+                case "appendD":
+                    modifiedText = appendAfterD(outputText);
+                    break;
+                case "appendAns":
+                    modifiedText = appendAfterAns(outputText);
+                    break;
+                case "insertBeforeEx":
+                    modifiedText = insertBeforeEx(outputText);
+                    break;
+                case "insertBeforeEx2":
+                    modifiedText = insertBeforeEx2(outputText);
+                    break;
+                case "insertBeforeNumberedLine":
+                    modifiedText = insertBeforeNumberedLine(outputText);
+                    break;
+                case "removeconsequtivetilde":
+                    modifiedText = removeConsecutiveTildes(outputText);
+                    break;
+                case "anotherOption":
+                    modifiedText = anotherReplacementFunction(outputText);
+                    break;
+                case "addmarkdownsection":
+                    modifiedText = addmarkdownsection(outputText);
+                    break;
+
+                case "replacenegwithequal":
+                    modifiedText = replacenegwithequal(outputText);
+                    break;
+                case "newlineafteroptions":
+                    modifiedText = newlineafteroptions(outputText);
+                    break;
+                case "adddollars":
+                    modifiedText = adddollars(outputText);
+                    break;
+                case 'replacesections':
+                    modifiedText = replacesections(outputText);
+                    break;
+                case 'replacesections2':
+                    modifiedText = replacesections2(outputText);
+                    break;
+                case 'removedoubleseprator':
+                    modifiedText = removedoubleseprator(outputText);
+                    break;
+                case 'addbeforedirections':
+                    modifiedText = addbeforedirections();
+                    break;
+                case 'addnegbeforesection':
+                    modifiedText = addnegbeforesection(outputText);
+                    break;
+                case 'correctnewline':
+                    modifiedText  = correctnewline(outputText);
+                    break;
+                case 'correcttable':
+                    modifiedText = correcttable(outputText);
+                    break;
+                case 'correctoptions':
+                    modifiedText = correctoptions(outputText);
+                    break;
+                case 'correctorder':
+                    modifiedText = correctorder(outputText);
+                    break;
+                case 'createnewline':
+                    modifiedText = createnewline(outputText);
+                    break;
+                case 'correctbeginaligned':
+                    modifiedText = correctbeginaligned(outputText);
+                    break;
+                case 'correctbeginbmatrix':
+                    modifiedText = correctbeginbmatrix(outputText) ; 
+                    break;
+                case 'questionNegationBold':
+                    modifiedText = questionNegationBold(outputText) ; 
+                    break;
+                case 'removePageNumber':
+                    modifiedText = removePageNumber(outputText) ; 
+                    break ; 
+                case 'exBold':
+                    modifiedText = exBold(outputText) ; 
+                    break ;
+                case 'solBold':
+                    modifiedText = exBold(outputText) ; 
+                    break ;  
+                case 'alphabeticalPointBold':
+                    modifiedText = alphabeticalPointBold(outputText) ; 
+                    break ; 
+                case 'romanNumberStepBold':
+                    modifiedText = romanNumberStepBold(outputText) ; 
+                    break ; 
+                case 'alphabetPointBold':
+                    modifiedText = alphabetPointBold(outputText) ; 
+                    break ; 
+                case 'addNewLineQuestion':
+                    modifiedText = addNewLineQuestion(outputText);
+                    break ; 
+                case 'questionNegationBoldFullStop':
+                    modifiedText = questionNegationBoldFullStop(outputText);
+                    break ; 
+                case 'boldBeforeSemiColon': 
+                    modifiedText = boldBeforeSemiColon(outputText) ; 
+                    break ; 
+                case 'titleHighlightSlides': 
+                    modifiedText = titleHighlightSlides(outputText) ; 
+                    break ; 
+                case 'leftAlignContent':
+                    modifiedText = leftAlignContent(outputText); 
+                    break ; 
+                case 'solAddBeforeNumSlide':
+                    modifiedText = solAddBeforeNumSlide(outputText) ; 
+                    break ;
+                case 'levelIslide':
+                    modifiedText = levelIslide(outputText) ; 
+                    break ; 
+                case 'levelIIslide':
+                    modifiedText = levelIIslide(outputText) ; 
+                    break ;
+                case 'hashToPrimary':
+                    modifiedText = hashToPrimary(outputText) ; 
+                    break ; 
+                case 'optionsFragment':
+                    modifiedText = optionsFragment(outputText) ; 
+                    break ;
+                case 'removeSpacesOptions':
+                    modifiedText = removeSpacesOptions(outputText) ; 
+                    break ;  
+            }
+
+            document.getElementById('outputText').value = modifiedText;
+        }
+
+        function removeSpacesOptions(text){
+            var lines = text.split('\n') ; 
+            var newlines = [] ; 
+            var tag = false;
+            
+            lines.map((line) =>{
+                if ((line[0] + line[1] + line[2]) == "(a)") {
+                    tag = true;
+                }
+                if ((line[0] + line[1] + line[2]) == "(d)") {
+                    tag = false;
+                }
+                if (tag == true){
+                    if(line != ''){
+                        newlines.push(line) ; 
+                    }
+                } else {
+                    newlines.push(line)
+                }
+                
+            });
+            var answer = newlines.join('\n') ; 
+            return answer; 
+        }
+
+
+        function optionsFragment(text){
+            const regex = /^\([a-d]\)/ ;
+            const regexOptionA = /^\(a\)/ ;
+
+            let lines = text.split('\n') ;
+
+            for(let i = 0 ; i < lines.length ; i++){
+                let line = lines[i] ; 
+
+                if(line.match(regex)){
+                    if(line.match(regexOptionA)){
+                        lines[i] += '<p class="fragment">' + lines[i] ;
+                    }
+                    lines[i] += '$\\newline$' ; 
+                }
+            }
+            let result = lines.join('\n') ; 
+            result += '</p>' ; 
+            return result ; 
+        }
+
+        function hashToPrimary(text){
+            const regex = /####\s*(.*?)\s*\n\s*(.*?)\n/gm ; 
+            text = text.replaceAll(regex, '####<Primary>$1</Primary>\n\n$2\n') ; 
+            return text ; 
+        }
+
+        function solAddBeforeNumSlide(text){
+            const regex = /((\d+)\.\s+\([a-z]\))/g;
+
+            text = text.replaceAll(regex,"Sol. $1");
+
+            return text ; 
+        }
+
+        function levelIslide(text){
+            const regex = /^(\d+)\./g ; 
+            const lines = text.split('\n') ; 
+            let output = '' ;
+
+            lines.forEach(line =>{
+                if(regex.test(line)){
+                    output += '#### Level - I \n \n' ; 
+                }
+                output += line + '\n' ; 
+            }) ; 
+            return output ; 
+        }
+
+        function levelIIslide(text){
+            const regex = /^(\d+)\./g ; 
+            const lines = text.split('\n') ; 
+            let output = '' ;
+
+            lines.forEach(line =>{
+                if(regex.test(line)){
+                    output += '## Level - II \n \n' ; 
+                }
+                output += line + '\n' ; 
+            }) ; 
+            return output ; 
+        }
+
+        
+
+        function leftAlignContent(text){
+         
+            const regexOption = /^\([d]\)/ ;
+            const regexQuestion = /^\d+\./ ;
+            
+            const lines = text.split('\n') ; 
+            let output = '' ; 
+            
+            lines.forEach(line => {
+                if(regexQuestion.test(line)){
+                    output += '<div style = "text-align: left;">\n \n';
+                }
+                output += line + '\n' ; 
+                if(regexOption.test(line)){
+                    output += '\n</div>\n' ; 
+                }
+            });
+            return output ; 
+        }
+    
+
+        
+
+        function romanNumberStepBold(text){
+            const regex = /(Step [IVXLCDM]+ :)/g ; 
+            text = text.replaceAll(regex, "**$1**") ; 
+            return text ; 
+        }
+
+
+
+        function titleHighlightSlides(text) {
+            return text.split('\n').map(function (line) {
+                var output =""
+                if(line.startsWith('##')){
+                    const heading = line.replace('##', '').trim() ;
+                    output += `<span style = "color:blue">**<Primary>${heading}</Primary>**</span>\n`;
+                }
+                else{
+                    output = line;
+                }
+                return output;
+            }).join('\n');
+        }
+
+    
+        function boldBeforeSemiColon(text){
+            const regex = /(?:^|\n)([^:\n]+):/g ; 
+            text = text.replaceAll(regex, "**$1:**");
+            return text ; 
+        }
+
+        function questionNegationBoldFullStop(text){
+            const regex = /(^|\n)(\d+\.)\s/g ; 
+            text = text.replaceAll(regex, "$1~~\n**$2** ") ; 
+            return text ; 
+        }
+
+        function addNewLineQuestion(text){
+            const regex = /(\d+)\./g ; 
+            text = text.replaceAll(regex, '\n$1.'); 
+            return text ; 
+        }
+
+        function alphabetPointBold(text){
+            const regex = /(\([a-z A-Z]\) [^:]+:)/g ; 
+            text = text.replace(regex, "**$1**") ; 
+            return text ; 
+        }
+
+        function removePageNumber(text){
+            const regex = /Page\s(\d+)/ ; 
+            text = text.replaceAll(regex, " ") ; 
+            return text ; 
+        }
+
+        // **(A) Parallel lines :** abc
+
+        // **(B) intersecting lines -** xyz
+
+        function alphabeticalPointBold(text){
+            const regex = /\([a-zA-Z]\)[^\n:-]+[:\-]/g ; 
+            text = text.replaceAll(regex, "**$&**") ;
+            return text ; 
+        }
+
+
+        function exBold(text){
+            const regex = /Ex\.\s+(\d+)/g; 
+            text = text.replaceAll(regex, "**Ex. $1**");
+            return text ; 
+        }
+
+        function solBold(text){
+            const regex = /(Sol\.)/g; 
+            text = text.replaceAll(regex, "**$1**");
+            return text ; 
+        }
+
+        function correctbeginaligned(text){
+
+            text = text.replaceAll("\\begin{aligned}","")
+            text = text.replaceAll("\\end{aligned}","")
+            text = text.replaceAll("\\\\\\","$")
+            text = text.replaceAll("&","$")
+            return text;
+        }
+
+        function questionNegationBold(text){
+            const regex = /^\d+\s/gm ; 
+            text = text.replaceAll(regex , match => `~~\n**${match.trim()}** `) ; 
+            return text ; 
+        }
+
+
+        function correctbeginbmatrix(text){
+
+            text = text.replaceAll("\\begin{bmatrix}","")
+            text = text.replaceAll("\\end{bmatrix}","")
+            text = text.replaceAll("\\\\\\","$")
+            text = text.replaceAll("&","")
+            text = text.replaceAll("\\Rightarrow", "$\\Rightarrow")
+            return text;
+        }
+
+
+        // function correctbeginbmatrix(text){
+
+        //     text = text.replaceAll("/\\begin{aligned}|\\end{aligned}/g","") ;
+        //     text = text.replaceAll("/\\\\/g","$") ; 
+        //     text = text.replaceAll("/&/g","") ;
+        //     return text;
+        // }
+
+        function createnewline(text){
+
+            text = text.replaceAll("* [","\n\n * [")
+            text = text.replaceAll("(a)","\n\n(a)")
+            text = text.replaceAll("(b)","\n\n(b)")
+            text = text.replaceAll("(c)","\n\n(c)")
+            text = text.replaceAll("(d)","\n\n(d)\n")
+            text = text.replaceAll("")
+            return text;
+
+
+        }
+        function correctorder(text) {
+            return text.split('\n').map(function (line) {
+                if (line.startsWith("[") && line.endsWith(":}")) {
+                    console.log("replaceing")
+                    line = line.replace("\\section*{", "~~\n<success>")
+                    line = line.replace(":}", "</success>")
+                    return "" + line;
+                    console.log(line);
+                }
+                return line;
+            }).join('\n');
+        }
+
+
+
+        function correcttable(text){
+            var tabledata = text.replaceAll("tabular","array")
+            tabledata = tabledata.replaceAll("$"," ")
+            tabledata = tabledata.replaceAll("\\\\","\\newline")
+            // var tabledata = ''
+            // var table = `$$\\begin{array}{}
+            // ${tabledata}
+            // \\end{array}$$
+            // `
+            return '$$'+tabledata+'$$';
+        }
+
+
+        function addbeforedirections(){
+            var outputText = document.getElementById('outputText').value || document.getElementById('inputText').value;
+            var newtext = outputText.replaceAll("Directions :", "~~\nDirections :");
+            newtext = newtext.replaceAll("Directions:", "~~\nDirections :");
+            newtext = newtext.replaceAll('Direction :',"~~\nDirection :")
+
+            return newtext;
+        }
+        function appendAfterD(text) {
+            return text.split('\n').map(line => line.includes('(D)') ? line + '\n~~' : line).join('\n');
+        }
+
+        function appendAfterE(text) {
+            return text.split('\n').map(line => line.includes('(E)') ? line + '\n~~' : line).join('\n');
+        }
+
+        function correctnewline(text){
+            newtext = text.replaceAll('\\\\',"\\newline")
+            return newtext
+        }
+
+        function removedoubleseprator(text) {
+            const regex = /======\n+======/g
+
+            var newtext = text.replaceAll(regex, "======");
+
+            return newtext;
+
+        }
+
+
+        function replacesections(text) {
+            return text.split('\n').map(function (line) {
+                if (line.startsWith("\\section*{") && line.endsWith(":}")) {
+                    console.log("replaceing")
+                    line = line.replace("\\section*{", "~~\n<success>")
+                    line = line.replace(":}", "</success>")
+                    return "" + line;
+                    console.log(line);
+                }
+                return line;
+            }).join('\n');
+        }
+
+
+        function addnegbeforesection(text) {
+            return text.split('\n').map(function (line) {
+                if (line.startsWith("\\section*{")) {
+
+                    return "~~\n\n" + line;
+
+                }
+                return line;
+            }).join('\n');
+
+        }
+
+        function replacesections2(text) {
+            return text.split('\n').map(function (line) {
+                if (line.startsWith("\\section*{") && line.endsWith("}")) {
+                    console.log("replaceing")
+                    line = line.replace("\\section*{", "~~\n<success>")
+                    line = line.replace("}", "</success>")
+                    return "" + line;
+                    console.log(line);
+                }
+                return line;
+            }).join('\n');
+        }
+
+        function adddollars(text) {
+            var outputText = document.getElementById('outputText').value || document.getElementById('inputText').value;
+            var newtext = outputText.replaceAll("\\(", " $\(")
+            newtext = newtext.replaceAll("\\)", "\)$ ")
+
+            return newtext;
+        }
+
+        function addmarkdownsection() {
+            var outputText = document.getElementById('outputText').value || document.getElementById('inputText').value;
+            var newtext =`<section data-markdown data-separator='======'>
+                <textarea data-template>\n\n
+                ${outputText}
+
+                \n\n
+
+                </textarea> </section>`
+
+            return newtext;
+        }
+
+
+        function newlineafteroptions(text) {
+            return text.split('\n').map(function (line) {
+                if (line.startsWith('(A)') || line.startsWith("(B)") || line.startsWith("(C)") || line.startsWith("(D)")||line.startsWith('(a)') || line.startsWith("(b)") || line.startsWith("(c)") || line.startsWith("(d)")) {
+                    return '\n' + line;
+                }
+                return line;
+            }).join('\n');
+
+        }
+
+        function replacenegwithequal() {
+            var outputText = document.getElementById('outputText').value || document.getElementById('inputText').value;
+            var newtext2 = outputText.replaceAll("~~", "======")
+
+            return newtext2;
+        }
+
+
+        function insertBeforeEx(text) {
+            return text.split('\n').map(function (line) {
+                if (line.includes('Ex.')) {
+                    return '~~\n' + line;
+                }
+                return line;
+            }).join('\n');
+        }
+
+        function appendAfterAns(text) {
+            return text.split('\n').map(line => line.includes('Ans.') ? line + '\n~~' : line).join('\n');
+        }
+
+        function anotherReplacementFunction(text) {
+            return text.replace(/somePattern/g, "someReplacement");
+        }
+
+        function insertBeforeEx2(text) {
+            return text.split('\n').map(function (line) {
+                if (line.startsWith('Ex ')) {
+                    return '~~\n' + line;
+                }
+                return line;
+            }).join('\n');
+        }
+
+
+        function removeConsecutiveTildes(text) {
+            var lines = text.split('\n');
+            var modifiedLines = [];
+            var foundTilde = false;
+
+            for (var i = 0; i < lines.length; i++) {
+                var currentLineTrimmed = lines[i].trim();
+                if (currentLineTrimmed === '~~') {
+                    if (!foundTilde) {
+                        // Keep the first tilde line
+                        modifiedLines.push(lines[i]);
+                        foundTilde = true;
+                    }
+                    // Skip all subsequent tilde lines
+                } else {
+                    if (currentLineTrimmed !== '') {
+                        // Reset the flag if a non-tilde, non-empty line is encountered
+                        foundTilde = false;
+                    }
+                    modifiedLines.push(lines[i]);
+                }
+            }
+
+            return modifiedLines.join('\n');
+        }
+
+
+        function insertBeforeNumberedLine(text) {
+            return text.split('\n').map(function (line) {
+                // Regular expression to match a line starting with a number followed by a full stop and a space or end of the line
+                var regex = /^\d+\.\s|^d+\.$/;
+                if (regex.test(line)) {
+                    return '~~\n' + line;
+                }
+                return line;
+            }).join('\n');
+        }
+
+
+        function clearTextAreas() {
+            document.getElementById('inputText').value = '';
+            document.getElementById('outputText').value = '';
+        }
+
+        function copyToClipboard() {
+            var outputText = document.getElementById('outputText');
+            outputText.select();
+            document.execCommand('copy');
+
+            var alertBox = document.getElementById('alertBox');
+            alertBox.style.display = 'block';
+            setTimeout(function () {
+                alertBox.style.display = 'none';
+            }, 2000); // Alert fades away after 2 seconds
+        }
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
